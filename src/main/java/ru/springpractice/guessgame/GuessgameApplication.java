@@ -3,12 +3,16 @@ package ru.springpractice.guessgame;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import ru.springpractice.guessgame.model.User;
+import ru.springpractice.guessgame.service.UserService;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
 @SpringBootApplication
+@EnableAspectJAutoProxy
 public class GuessgameApplication {
 
 	public static void main(String[] args) {
@@ -19,6 +23,7 @@ public class GuessgameApplication {
 		int randomizeNumber = randInt.getRandomInt();
 		ResourceBundle rsrcbndl = ResourceBundle.getBundle("text", new Locale("en"));
 
+		/*
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println(rsrcbndl.getString("start")
@@ -34,7 +39,10 @@ public class GuessgameApplication {
 		}
 		System.out.println(rsrcbndl.getString("figuredOut") + " " + randomizeNumber);
 		sc.close();
-
+		*/
+		UserService bean = context.getBean(UserService.class);
+		User usr = bean.getUserById(1);
+		bean.save(usr);
 	}
 
 }
