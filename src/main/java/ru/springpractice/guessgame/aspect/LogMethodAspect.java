@@ -17,9 +17,10 @@ import java.util.stream.Collectors;
 public class LogMethodAspect {
 
     @Around("@annotation(ru.springpractice.guessgame.annotation.LogMethod)")
-    public void logPerfomanceData(ProceedingJoinPoint point) {
+    public void logPerfomanceData(ProceedingJoinPoint point) throws Throwable {
         String methodName = point.getSignature().getName();
         List<String> args = Arrays.stream(point.getArgs()).map(Object::toString).collect(Collectors.toList());
-        log.info("Invoke method {} with params {}", methodName, args );
+        Object returnedVaule = point.proceed();
+        log.info("Invoke method {} with params {}, and return class {}", methodName, args, returnedVaule.getClass() );
     }
 }
